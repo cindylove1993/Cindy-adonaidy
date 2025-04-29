@@ -1,102 +1,157 @@
-// Array para almacenar los productos
-const productos = [
-  { id: 1, nombre: "Crema Hidratante TimeWise", categoria: "Hidratación", precio: 35.00, imagen: "ruta/a/crema1.jpg" },
-  { id: 2, nombre: "Limpiador Facial 3 en 1", categoria: "Limpieza", precio: 25.00, imagen: "ruta/a/limpiador1.jpg" },
-  { id: 3, nombre: "Serum Anti-edad", categoria: "Anti-edad", precio: 45.00, imagen: "ruta/a/serum1.jpg" },
-  { id: 4, nombre: "Tónico Facial Mary Kay", categoria: "Limpieza", precio: 22.00, imagen: "ruta/a/tonico1.jpg" }
-];
-
-// Array para el carrito de compras
-let carrito = [];
-
-// Función para mostrar productos
-function mostrarProductos(categoria = "todos") {
-  const productosFiltrados = categoria === "todos" ? productos : productos.filter(producto => producto.categoria === categoria);
-  const contenedorProductos = document.getElementById("productos");
-  contenedorProductos.innerHTML = ''; // Limpiar el contenedor antes de mostrar los productos
-
-  productosFiltrados.forEach(producto => {
-    const divProducto = document.createElement("div");
-    divProducto.classList.add("producto");
-    divProducto.innerHTML = `
-      <img src="${producto.imagen}" alt="${producto.nombre}" />
-      <h3>${producto.nombre}</h3>
-      <p>$${producto.precio.toFixed(2)}</p>
-      <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
-    `;
-    contenedorProductos.appendChild(divProducto);
-  });
+/* Estilo general */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff0f5;
+  color: #4a004a;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
 }
 
-// Función para filtrar productos por categoría
-function filtrarPorCategoria() {
-  const categoria = document.getElementById("categoria").value;
-  mostrarProductos(categoria);
+/* Encabezado */
+header {
+  background-color: #ff66b2;
+  color: white;
+  padding: 25px 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-// Función para agregar productos al carrito
-function agregarAlCarrito(id) {
-  const producto = productos.find(p => p.id === id);
-  carrito.push(producto);
-  actualizarCarrito();
+header h1 {
+  margin: 0 0 10px;
+  font-size: 2rem;
 }
 
-// Función para actualizar la visualización del carrito
-function actualizarCarrito() {
-  const cantidadCarrito = document.getElementById("cantidad-carrito");
-  const listaCarrito = document.getElementById("lista-carrito");
-  const totalCarrito = document.getElementById("total");
-
-  cantidadCarrito.textContent = carrito.length;
-
-  listaCarrito.innerHTML = ''; // Limpiar la lista antes de actualizar
-  let total = 0;
-
-  carrito.forEach(producto => {
-    const li = document.createElement("li");
-    li.textContent = `${producto.nombre} - $${producto.precio.toFixed(2)}`;
-    listaCarrito.appendChild(li);
-    total += producto.precio;
-  });
-
-  totalCarrito.textContent = total.toFixed(2);
+header select {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #fff;
+  color: #4a004a;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-// Función para vaciar el carrito
-function vaciarCarrito() {
-  carrito = [];
-  actualizarCarrito();
+/* Productos */
+#productos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
 }
 
-// Función para finalizar la compra
-function finalizarCompra() {
-  if (carrito.length === 0) {
-    alert("¡Tu carrito está vacío!");
-  } else {
-    // Aquí podrías integrar un sistema de pago real
-    alert("¡Compra finalizada! Gracias por tu compra.");
-    vaciarCarrito();
+.producto {
+  background-color: #ffe6f0;
+  border: 2px solid #ff99cc;
+  border-radius: 15px;
+  width: 230px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.producto img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.producto h3 {
+  margin: 10px 0 5px;
+}
+
+.producto p {
+  font-weight: bold;
+  margin: 5px 0 10px;
+}
+
+.producto button {
+  background-color: #ff66b2;
+  border: none;
+  padding: 10px 16px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.producto button:hover {
+  background-color: #cc007a;
+}
+
+/* Carrito */
+.carrito {
+  background-color: #fff0f5;
+  border: 2px dashed #ff99cc;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.carrito h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.carrito ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 10px;
+}
+
+.carrito li {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.carrito button {
+  background-color: #ff66b2;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.carrito button:hover {
+  background-color: #cc007a;
+}
+
+/* Pago */
+.pago {
+  margin-top: 20px;
+  background-color: #ffe6f0;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #productos {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .producto {
+    width: 90%;
+  }
+
+  .carrito {
+    width: 90%;
   }
 }
-
-// Integración de PayPal
-paypal.Buttons({
-  createOrder: function(data, actions) {
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          value: document.getElementById("total").textContent
-        }
-      }]
-    });
-  },
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-      alert("Compra aprobada por " + details.payer.name.given_name);
-      vaciarCarrito();
-    });
-  }
-}).render('#paypal-button-container');
-
-// Inicializar la página mostrando todos los productos
-mostrarProductos();
