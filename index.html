@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mary Kay - Cosmética Dermatológica</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>💖 Mary Kay - Cosmética Dermatológica</h1>
+    <label for="categoria">Filtrar por categoría:</label>
+    <select id="categoria" onchange="filtrarPorCategoria()">
+      <option value="todos">Todos</option>
+      <option value="Hidratación">Hidratación</option>
+      <option value="Limpieza">Limpieza</option>
+      <option value="Anti-edad">Anti-edad</option>
+    </select>
+    <p>Productos esenciales para una piel radiante</p>
+  </header>
+
+  <section id="productos"></section>
+
+  <section class="carrito">
+    <h2>🛍️ Tu Carrito</h2>
+    <p>Productos en carrito: <span id="cantidad-carrito">0</span></p>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0.00</span></p>
+    <button onclick="vaciarCarrito()">Vaciar Carrito</button>
+    <button onclick="finalizarCompra()">Finalizar Compra</button>
+
+    <div class="pago">
+      <h3>💳 Método de pago</h3>
+      <div id="paypal-button-container" style="margin-top: 10px;"></div>
+    </div>
+  </section>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&components=buttons,funding-eligibility"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
